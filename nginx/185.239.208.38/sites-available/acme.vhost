@@ -2,7 +2,7 @@ server {
         listen 80;
 		listen [::]:80;
 
-		server_name vmd116054.contaboserver.net;
+		server_name vmd116055.contaboserver.net;
 
 		root /usr/local/ispconfig/interface/acme;
 

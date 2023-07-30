@@ -1,15 +1,15 @@
 <?php
-/* Smarty version 4.3.2, created on 2023-07-30 02:03:00
+/* Smarty version 4.3.2, created on 2023-07-30 04:19:20
   from '/neawolf/web-dev/template/module/_header.navi.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.3.2',
-  'unifunc' => 'content_64c5a8b499a258_45447257',
+  'unifunc' => 'content_64c5c8a80b8144_41882731',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'ee6728fd01226637e766b5757cefb54ed1db7c38' => 
+    '7f10e37f662ede571a5d645e5c146ef8e82e0fab' => 
     array (
       0 => '/neawolf/web-dev/template/module/_header.navi.tpl',
       1 => 1690188875,
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_64c5a8b499a258_45447257 (Smarty_Internal_Template $_smarty_tpl) {
+function content_64c5c8a80b8144_41882731 (Smarty_Internal_Template $_smarty_tpl) {
 ?>    <div class="preloader-container">
       <div class="lds-roller preloader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>

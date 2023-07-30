@@ -25,6 +25,7 @@ class DATABASE {
     require_once(__DIR__ . "/conf.inc.php");
     try {
       $__pdo = new PDO('mysql:host='._DB_HOST.';dbname='._DB_DBNAME.'', ''._DB_USER, ''._DB_PASS);
+      #$__pdo = new PDO('mysql:unix_socket=/run/mysqld/mysqld.sock;dbname='._DB_DBNAME.'', ''._DB_USER, ''._DB_PASS);
       $this->PDO = $__pdo;
     }catch(PDOException $e) {
       $this->dberror = true;

@@ -92,6 +92,7 @@ setServerRule() {
           #/sbin/iptables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 3306 -j ACCEPT
           $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 8080 -s ${NeawolfIP} -j ACCEPT
           $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 8081 -s ${NeawolfIP} -j ACCEPT
+          $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 3306 -s ${NeawolfIP} -j ACCEPT
       ;;
 
     $IP_Database_1)
@@ -154,6 +155,12 @@ postSetAll() {
   $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 3306 -s ${IP_Webserver_1} -j ACCEPT
   $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 3306 -s ${IP_Webserver_2} -j ACCEPT
   $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 3306 -s ${IP_Database_1} -j ACCEPT
+
+  $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 90 -s ${IP_Firewall_1} -j ACCEPT
+  $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 90 -s ${IP_Firewall_2} -j ACCEPT
+  $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 90 -s ${IP_Webserver_1} -j ACCEPT
+  $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 90 -s ${IP_Webserver_2} -j ACCEPT
+  $BinIpTables -t filter -A INPUT -p tcp -d ${LocalIP} --dport 90 -s ${IP_Database_1} -j ACCEPT
 
   $BinIpTables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
   $BinIpTables -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT

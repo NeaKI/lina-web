@@ -5,8 +5,8 @@ server {
 
         ssl_protocols TLSv1.3 TLSv1.2;
         listen [::]:443 ssl http2;
-        ssl_certificate /var/www/clients/client1/web1/ssl/web/lina-narzisse.de-le.crt;
-        ssl_certificate_key /var/www/clients/client1/web1/ssl/web/lina-narzisse.de-le.key;
+        ssl_certificate /var/www/clients/client1/web1/ssl/dev/dev.lina-narzisse.de-le.crt;
+        ssl_certificate_key /var/www/clients/client1/web1/ssl/dev/dev.lina-narzisse.de-le.key;
 
         server_name dev.lina-narzisse.de *.dev.lina-narzisse.de;
 

@@ -1,6 +1,12 @@
 <?php
   require_once(__DIR__ . "/../_inc.pagebase.php");
   require_once(__DIR__ . "/_inc.pagebase.php");
+
+  if($_REQUEST["getserver"] == "status"){
+    require_once(__DIR__ . "/_inc.getserverstatus.php");
+    exit;
+  }
+
   ob_start("sanitize_output");
 ?>
 <!doctype html>
@@ -121,6 +127,7 @@
                         <div class="accordion-body">
                           <ul class="list-group">
                             <li class="list-group-item"><a href="<?=$BASELINK?>/content/administration/admin-user.php">Admin User</a></li>
+                            <li class="list-group-item"><a href="<?=$BASELINK?>/content/administration/server-status.php">Server & Dienste</a></li>
                           </ul>
                         </div>
                       </div>

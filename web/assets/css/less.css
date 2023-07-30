@@ -72,7 +72,7 @@ hr.dashed {
 .dividingline {
   min-height: 1px;
   max-height: 1px;
-  background: #3adae6;
+  background: #e6155e;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -114,7 +114,7 @@ table.dashed-right td {
   padding: 2px;
   padding-left: 6px;
   padding-right: 6px;
-  background: #3adae6;
+  background: #e6155e;
   font-size: 17px;
   border: none;
   cursor: pointer;
@@ -130,7 +130,7 @@ table.dashed-right td {
   border: none;
   height: 24px;
   background: #dddddd;
-  border: 1px dashed #3adae6;
+  border: 1px dashed #e6155e;
   border-right: 0;
   color: ;
 }
@@ -195,8 +195,8 @@ html body #bodypage_padding {
   font-weight: normal;
 }
 html body #headernavi_top {
-  background-color: #3adae6;
-  color: #3adae6;
+  background-color: #e6155e;
+  color: #e6155e;
   font-size: 12px;
 }
 html body #headernavi_bottom {
@@ -219,7 +219,7 @@ html body #headernavi_nav .social-media p.smarttext a {
 html body #headernavi_nav .social-media p a {
   padding-left: 10px;
   text-decoration: none;
-  color: #3adae6;
+  color: #e6155e;
 }
 html body #headernavi_nav .toggler {
   color: #000000;
@@ -231,7 +231,7 @@ html body #headernavi_nav .navbar-toggler {
 }
 html body #headernavi_nav .navbar-brand {
   padding: 10px;
-  background: #3adae6;
+  background: #e6155e;
   padding-left: 20px;
   padding-right: 20px;
   font-weight: bold;
@@ -240,13 +240,13 @@ html body #headernavi_nav .navbar-brand {
 }
 html body #headernavi_nav .navbar-nav .dropdown .dropdown-menu {
   background-color: #dddddd;
-  border: 1px solid #3adae6;
+  border: 1px solid #e6155e;
 }
 html body #headernavi_nav .navbar-nav .dropdown .dropdown-menu li a {
   font-size: 14px;
 }
 html body #headernavi_nav .navbar-nav .dropdown .dropdown-menu li:hover a {
-  background-color: #3adae6;
+  background-color: #e6155e;
 }
 html body footer {
   background-color: #ffffff;
@@ -260,7 +260,7 @@ html body footer .socialmedia li {
   padding-right: 20px;
 }
 html body footer .socialmedia li a {
-  color: #3adae6;
+  color: #e6155e;
   text-decoration: none;
   font-size: 24px;
 }
@@ -286,7 +286,7 @@ html body footer .copyright a {
   color: #333333;
 }
 html body footer .copyright a.copyright-nav-item:hover {
-  color: #3adae6;
+  color: #e6155e;
 }
 .preloader-container {
   display: none;

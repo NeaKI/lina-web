@@ -1,15 +1,15 @@
 <?php
-/* Smarty version 4.3.2, created on 2023-07-30 03:34:34
+/* Smarty version 4.3.2, created on 2023-07-30 04:19:20
   from '/neawolf/web-dev/template/view/error/404.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.3.2',
-  'unifunc' => 'content_64c5be2a947925_86294853',
+  'unifunc' => 'content_64c5c8a80aa791_79220073',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '0553bb1e2e45cf6bd0507f2c880e91c173dc905e' => 
+    'c892ccc2e727862f58e6e67ea88245e6a92434c1' => 
     array (
       0 => '/neawolf/web-dev/template/view/error/404.tpl',
       1 => 1690188549,
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:../../module/_footer.tpl' => 1,
   ),
 ),false)) {
-function content_64c5be2a947925_86294853 (Smarty_Internal_Template $_smarty_tpl) {
+function content_64c5c8a80aa791_79220073 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:../../module/_header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 

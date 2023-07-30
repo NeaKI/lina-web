@@ -5,8 +5,8 @@ server {
 
         ssl_protocols TLSv1.3 TLSv1.2;
         listen [::]:443 ssl http2;
-        ssl_certificate /var/www/clients/client1/web2/ssl/web/lina-narzisse.de-le.crt;
-        ssl_certificate_key /var/www/clients/client1/web2/ssl/web/lina-narzisse.de-le.key;
+        ssl_certificate /var/www/clients/client1/web1/ssl/dev/dev.lina-narzisse.de-le.crt;
+        ssl_certificate_key /var/www/clients/client1/web1/ssl/dev/dev.lina-narzisse.de-le.key;
 
         server_name dev.lina-narzisse.de *.dev.lina-narzisse.de;
 
@@ -33,10 +33,10 @@ server {
 
         ssl_protocols TLSv1.3 TLSv1.2;
         listen [::]:443 ssl http2;
-        ssl_certificate /var/www/clients/client1/web2/ssl/web/lina-narzisse.de-le.crt;
-        ssl_certificate_key /var/www/clients/client1/web2/ssl/web/lina-narzisse.de-le.key;
+        ssl_certificate /var/www/clients/client1/web1/ssl/web/lina-narzisse.de-le.crt;
+        ssl_certificate_key /var/www/clients/client1/web1/ssl/web/lina-narzisse.de-le.key;
 
-        server_name lina-narzisse.de *.lina-narzisse.de;
+        server_name lina-narzisse.de ;
 
         root   /neawolf/web/;
 
@@ -121,8 +121,8 @@ server {
             #log_not_found off;
             #try_files $uri /web-backend-nea/index.php$is_args$args;
             #include /etc/nginx/fastcgi_params;
-            #fastcgi_param PHP_VALUE open_basedir="/var/www/clients/client1/web2/web:/neawolf/web";
-            #fastcgi_pass unix:/var/lib/php8.1-fpm/web2.sock;
+            #fastcgi_param PHP_VALUE open_basedir="/var/www/clients/client1/web1/web:/neawolf/web";
+            #fastcgi_pass unix:/var/lib/php8.1-fpm/web1.sock;
             #fastcgi_index index.php;
             #fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             #fastcgi_intercept_errors on;
@@ -134,8 +134,8 @@ server {
             log_not_found off;
             try_files $uri /index.php$is_args$args;
             include /etc/nginx/fastcgi_params;
-            fastcgi_param PHP_VALUE open_basedir="/var/www/clients/client1/web2/web:/neawolf/web";
-            fastcgi_pass unix:/var/lib/php8.1-fpm/web2.sock;
+            fastcgi_param PHP_VALUE open_basedir="/var/www/clients/client1/web1/web:/neawolf/web";
+            fastcgi_pass unix:/var/lib/php8.1-fpm/web1.sock;
             fastcgi_index index.php;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_intercept_errors on;
@@ -147,7 +147,7 @@ server {
             try_files $uri =404;
             log_not_found off;
             include /etc/nginx/fastcgi_params;
-            fastcgi_param PHP_VALUE open_basedir="/var/www/clients/client1/web2/web:/neawolf/web";
+            fastcgi_param PHP_VALUE open_basedir="/var/www/clients/client1/web1/web:/neawolf/web";
             fastcgi_intercept_errors on;
             #
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -157,7 +157,7 @@ server {
             fastcgi_buffer_size 32k;
             fastcgi_read_timeout 300s;
             client_body_buffer_size 128k;
-            fastcgi_pass unix:/var/lib/php8.1-fpm/web2.sock;
+            fastcgi_pass unix:/var/lib/php8.1-fpm/web1.sock;
             http2_push_preload on;
         }
 

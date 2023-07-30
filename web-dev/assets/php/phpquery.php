@@ -19,12 +19,20 @@ $QUERYDOC->find('body')->append('<input type="hidden" name="neasecses" id="nease
 
 $QUERYDOC->find('form, input, select, textarea')->attr('autocomplete', "off");
 
+$_CURRENT_WEBSERVER=$_SERVER["SERVER_ADDR"];
+$_CURRENT_FIREWALL=$_SERVER["REMOTE_ADDR"];
+
+$QUERYDOC->find('head')->append('<meta name="xdetect-webserver" content="'.$_CURRENT_WEBSERVER.'" />');
+$QUERYDOC->find('head')->append('<meta name="xdetect-gateway" content="'.$_CURRENT_FIREWALL.'" />');
+
 $QUERYDOC->find('head')->append('
   <script>
     var xdetect = {
       "ismobile" : "' . $isMobile . '",
       "istablet" : "' . $isTablet . '",
       "isphone" : "' . $isPhone . '",
+      "webserver" : "' . $_CURRENT_WEBSERVER . '",
+      "gateway" : "' . $_CURRENT_FIREWALL . '",
     }
   </script>
 ');
