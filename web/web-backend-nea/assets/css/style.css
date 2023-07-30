@@ -1,0 +1,14 @@
+
+body.webadmin {
+  max-width: 99% !important;
+  margin-left: auto;
+  margin-right: auto;
+} 
+
+@media (min-width: 1320px) {
+  body.webadmin, body.webadmin .container {
+    max-width: 1300px !important;
+    margin-left: auto;
+    margin-right: auto;
+  } 
+}

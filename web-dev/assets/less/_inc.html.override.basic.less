@@ -1,0 +1,89 @@
+
+
+/**
+ * basis classes
+ */
+.bold {
+  font-weight: bold;
+}
+
+hr {
+  border-top: 1px solid @color_html_text;
+  border-color: @color_html_text !important;
+
+  &.dashed {
+    border-top: 1px dashed @color_html_text;
+  }
+}
+
+
+
+/**
+ * override
+ */
+
+@media (min-width: 992px) {
+  .d-lg-block-flex {
+      display: flex!important;
+  }
+
+  .d-md-none-flex {
+    display: flex!important;
+  }
+}
+
+
+@media (max-width: 992px) {
+  #bodypage_padding {
+    padding: 10px!important;
+  }
+}
+
+
+@media (min-width: 1920px) {
+  .container-fullbody {
+    max-width: 1920px !important;
+    margin-left: auto;
+    margin-right: auto;
+    background: @color_html_background;
+  }
+  html {
+    background: transparent;
+  }
+  body {
+    height: 100%;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: #efefef !important;
+  }
+  #bodyborder {
+    background-color: @color_html_background !important;
+  }
+}
+
+@media (max-width: 1920px) {
+  .container-fullbody {
+    max-width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+  } 
+}
+
+
+.input-group-sm {
+  height: 50%;
+}
+
+.cursor {
+  &.pointer {
+    cursor: pointer;
+  }
+}
+
+.ui-sortable-helper {
+  background: #eee !important;
+  border: 1px dashed #333;
+}

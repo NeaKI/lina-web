@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /
+
+Sitemap: https://lina-narzisse.de/sitemap.xml

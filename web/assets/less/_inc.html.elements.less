@@ -1,0 +1,49 @@
+
+.dividingline {
+  min-height: 1px;
+  max-height: 1px;
+  background: @colorMain_1;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  content: " ";
+}
+
+table {
+  &.vertical-middle {
+    td { 
+      vertical-align: middle; 
+    }
+  }
+  &.dashed-left {
+    td { 
+      border-left: 1px dashed @colorMain_3; 
+    }
+  }
+  &.dashed-right {
+    td { 
+      border-right: 1px dashed @colorMain_3;
+    }
+  }
+}
+
+
+#colorpickercontainer {
+  display: flex;
+  border: 1px solid #000;
+  position: absolute;
+  background-color: #fff;
+  text-align: center;
+
+    table {
+      .previewcolor {
+        min-height: 20px;
+        width: 100%;
+        display: inline-block;
+      }
+    }
+}
+
+.container.sortable {
+  background: @color_html_background;
+}

@@ -1,0 +1,197 @@
+/**
+ * overload 
+ */
+
+.container-fluid {
+    padding: 0 0 0 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+.col {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+
+/**
+ * html
+ */
+
+* {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+
+    input:focus, textarea:focus, select:focus, button:focus{
+      outline: none;
+    }
+}
+
+html {
+  -webkit-tap-highlight-color:transparent;
+
+  body {
+    background-color: @color_html_background;
+    color: @color_html_text;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: visible !important;
+
+      #bodyborder {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background: transparent;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: -200;
+      }
+
+      #bodypage_padding {
+        padding: 20px;
+        font-size: 14px;
+        font-weight: normal;
+      }    
+
+      #headernavi_top {
+        background-color: @color_headerNav_1_background;
+        color: @color_headerNav_1_font;
+        font-size: 12px;
+      }
+
+      #headernavi_bottom {
+        background-color: @color_headerNav_2_background;
+        color: @color_headerNav_2_font;
+        font-size: 14px;
+      }
+
+      #headernavi_nav {
+        background-color: @color_headerNav_background;
+        color: @color_headerNav_font;
+
+          a {
+            color: @color_headerNav_font;
+            font-size: 15px;
+            padding-right: 10px;
+          }
+
+          .social-media {
+            p {
+              &.smarttext {
+                a {
+                  font-size: 12px;
+                }
+              }
+
+              a {
+                padding-left: 10px;
+                text-decoration: none;
+                color: @colorMain_1;
+              }
+            }
+          }
+
+          .toggler {
+            color: @color_headerNav_font;
+          }
+
+          .navbar-toggler {
+            color: @color_headerNav_font;
+            font-weight: normal;
+            font-size: 16px;
+          }
+
+          .navbar-brand {
+            padding: 10px;
+            background: @colorMain_1;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-weight: bold;
+            font-size: 24px;
+            color: @colorMain_2;
+          }
+
+          .navbar-nav {
+            .dropdown {
+              .dropdown-menu {
+                background-color: @color_headerNav_1_sub_background;
+                border: 1px solid @color_headerNav_1_background;
+
+                  li {
+                    a {
+                      font-size: 14px;
+                    }
+
+                    &:hover {
+                      a {
+                        background-color: @color_headerNav_1_background;
+                      }
+                    }
+                  }
+              }
+            }
+          }
+      }
+
+      footer {
+        background-color: @color_footer_1_background;
+        color: @color_footer_font;
+
+          .socialmedia {
+            padding: 6px;
+
+              li {
+                padding-left: 20px;
+                padding-right: 20px;
+
+                  a {
+                    color: @color_headerNav_1_background;
+                    text-decoration: none;
+                    font-size: 24px;
+                  }
+
+                  .socialtext {
+                    font-size: 12px;
+                    padding-left: 6px;
+                  }
+              }
+          }
+
+          .copyright {
+            background-color: @color_footer_2_background;
+
+              section {
+                margin: 0;
+                font-size: 11px;
+                font-weight: normal;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 8px;
+                padding-bottom: 3px;
+                color: @color_footerCopyright_font;
+              }
+
+              a {
+                text-decoration: none;
+                color: @color_footerCopyright_font;
+
+                  &.copyright-nav-item:hover {
+                    color: @colorMain_1;
+                  }
+              }
+          }
+      }
+  }
+}

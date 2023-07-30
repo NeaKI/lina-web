@@ -1,0 +1,154 @@
+/**
+ * basic colors; definition
+ */
+
+@admin_navi_background: #333333;
+@admin_navi_background_item: #555555;
+@admin_navi_color: #dddddd;
+@admin_body_background: #eeeeee;
+@admin_content_background: #ffffff;
+@admin_content_color: #000000;
+@admin_highlight_green: #1abf17;
+
+
+
+
+/**
+ * webadmin html
+ */
+
+body.webadmin {
+    background-color: @admin_body_background;
+
+    .form-horizontal .signup {
+      background-color: @admin_navi_background;
+    }
+
+    .maincontainer {
+      border-right: 1px solid @admin_navi_background;
+
+        .subpage-breadcrumb {
+          background-color: @admin_navi_background;
+          color: @admin_navi_color;
+
+            .breadcrumb {
+              padding: 10px;
+
+                .breadcrumb-item {
+                  &.active {
+                    color: @admin_navi_color;
+                    font-weight: bold;
+                  }
+
+                  &::before {
+                    color: @admin_navi_color;
+                    content: "\00BB";
+                  }
+
+                  &:first-child {
+                    &::before {
+                      color: @admin_navi_color;
+                      content: " ";
+                    }
+                  }
+                }
+            }
+        }
+
+        .naviside {
+          background-color: @admin_navi_background !important;
+          color: @admin_navi_color;
+
+            a {
+              color: @admin_navi_color;
+              width: 100%;
+            }
+
+            .accordion {
+
+              .accordion-item {
+                background-color: @admin_navi_background_item;
+                border-radius: 0 !important;
+                border: 0;
+
+                  .accordion-collapse {
+                    margin-bottom: 10px;
+
+                      .accordion-body {
+                        padding: 0;
+                        padding-left: 5px;
+
+                          .list-group{
+                            border-radius: 0;
+
+                              a {
+                                text-decoration: none;
+                                color: @admin_navi_background;
+                                width: 100%;
+                                display: inline-block;
+                              }
+                          }
+                      }
+                  }
+
+                  .logoutbutton {
+                    .logoutcollapse {
+                      font-size: 14px;
+                      color: #a30;
+                      font-weight: bold;
+                      text-decoration: none;
+                    }
+
+                    &::after {
+                      content: "";
+                    }
+                  }
+              }
+
+              .accordion-button {
+                background: @admin_navi_background;
+                color: @admin_navi_color;
+
+                  &::after {
+                    background-image: none;
+                    font-family: "Font Awesome 5 Free";
+                    content: "\f884";
+                    display: inline-block;
+                    padding-right: 3px;
+                    vertical-align: middle;
+                    font-weight: 900;
+                    color: @admin_highlight_green;
+                  }
+
+                  &.collapsed {
+                    &::after {
+                      color: @admin_navi_color;
+                    }
+                  }
+              }
+            }
+        }
+
+        .contentarea {
+          background-color: @admin_content_background;
+          color: @admin_content_color;
+
+            .admineditvalues {
+
+              input {
+
+                &[type="text"] {
+                  border: 1px solid @admin_navi_background;
+                  color: @admin_navi_background;
+                }
+              }
+
+              .deleteadminvalues {
+                color: #e00;
+                cursor: pointer;
+              }
+            }
+        }
+    }
+
+}

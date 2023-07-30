@@ -1,0 +1,47 @@
+
+#headernavi {
+  form {
+    margin-top: 10px;
+  }
+
+  .search-container {
+    line-height: normal;
+    display: table;
+
+      button {
+        float: right;
+        padding: 2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        background: @colorMain_1;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+      }  
+
+      button:hover {
+        background: #ccc;
+      }
+
+      input[type=text] {
+        padding: 0;
+        padding-left: 4px;
+        margin-top: 0;
+        font-size: 12px;
+        border: none;
+        height: 24px;
+        background: @color_headerNav_2_background;
+        border: 1px dashed @colorMain_1;
+        border-right: 0;
+        color: @colorWhite;
+      }
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  #headernavi .search-container {
+    float: none;
+  }
+}
+
