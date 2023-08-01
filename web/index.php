@@ -61,7 +61,7 @@ if(!$requestFileFound){
 }
 
 require_once(__DIR__ . "/assets/php/phpquery.php");
-print_r($_SERVER);
+
 
 #print_r($controllerPath . $REQUEST_FILE);
 #print_r($argTemplateFile);

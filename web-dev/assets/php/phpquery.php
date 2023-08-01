@@ -1,6 +1,7 @@
 <?php 
 
-require_once __DIR__ . "/phpquery/phpQuery-onefile.php";
+#require_once __DIR__ . "/phpquery/phpQuery-onefile.php";
+require_once __DIR__ . "/phpQuery/phpQuery.php";
 $ouputcontent = ob_get_contents();
 ob_end_clean();
 
@@ -49,7 +50,6 @@ if($_REQUEST["hrefsmartlink"] == "true"){
 }else{
   $ouputcontent = sanitize_output($QUERYDOC);
 }
-
 
 /* smarty debug window */
 $ouputcontent = str_replace('<head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >', '<head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" >', $ouputcontent);

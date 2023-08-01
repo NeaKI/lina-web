@@ -1,37 +1,55 @@
-<?php // hello-world.php
+<?php 
+require_once(__DIR__ . "/_inc.pagebase.php");
+@session_start();
+
+if($_SESSION["ADMINNAME"] == "" && $_SESSION["login"] == $SESSNAME){
+  exit();
+}
 
 require __DIR__ . '/../vendor/autoload.php';
-
 use Amp\Future;
 use function Amp\async;
-use function Amp\delay;
 
-$future1 = async(function () {
-    echo 'Hello ';
+$UUID = uniqid();
+$async = [];
 
-    // delay() is a non-blocking version of PHP's sleep() function,
-    // which only pauses the current fiber instead of blocking the whole process.
-    delay(2);
+$SERVERSTATUS = [];
+$SERVERS = [];
+$SERVERS[] = "45.67.221.30";
+$SERVERS[] = "45.88.223.172";
+$SERVERS[] = "185.239.208.38";
+$SERVERS[] = "185.239.208.39";
+$SERVERS[] = "185.194.216.15";
 
-    echo 'the future! ';
-});
 
-$future2 = async(function () {
-    echo 'World ';
+$forCount = 0;
+foreach($SERVERS as $key) {
+    global $key;
 
-    // Let's pause for only 1 instead of 2 seconds here,
-    // so our text is printed in the correct order.
-    delay(1);
+  $async[$key] = async(function () {
+    global $forCount;
+    global $UUID;
+    global $SERVERSTATUS;
+    global $SERVERS;
+    $server = $SERVERS[$forCount++];
 
-    echo 'from ';
-});
+      try{
+        $SERVERSTATUS[$server] = json_decode(file_get_contents("http://".$server.":90/?uuid=".$UUID."&randnum=".$_REQUEST["randnum"]), true);
+      }catch(Exception $ex){
+        $SERVERSTATUS[$server]["server"]["connect"] = false;
+        $SERVERSTATUS[$server]["server"]["xuuid"] = false;
+      }
+      $SERVERSTATUS[$server]["server"]["xuuid"] = $UUID;
+      $SERVERSTATUS[$server]["server"]["xrandnum"] = $_REQUEST["randnum"];
+      $SERVERSTATUS[$server]["server"]["connect"] = ($_REQUEST["randnum"] == $SERVERSTATUS[$server]["server"]["randnum"] && $UUID == $SERVERSTATUS[$server]["server"]["uuid"] ) ? true : false;
 
-// Our functions have been queued, but won't be executed until the event-loop gains control.
-echo "Let's start: ";
+  });
+}
 
-// Awaiting a future outside a fiber switches to the event loop until the future is complete.
-// Once the event loop gains control, it executes our already queued functions we've passed to async()
-$future1->await();
-$future2->await();
 
-echo PHP_EOL;
+foreach($SERVERS as $key => $server) {
+  $async[$server]->await();
+};
+
+echo json_encode($SERVERSTATUS);
+

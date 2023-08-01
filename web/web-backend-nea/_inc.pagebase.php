@@ -1,5 +1,7 @@
 <?php 
 
+error_reporting(1);
+ini_set('display_errors', 1);
 $BASELINK = "/web-backend-nea";
 
 /**
@@ -8,6 +10,7 @@ $BASELINK = "/web-backend-nea";
 session_start();
 
 function redirectGetSelf(){
+  global $BASELINK;
   header('Location: ' . $BASELINK, true, 302);
   die();
 }
@@ -71,6 +74,12 @@ if($_SESSION["login"] != $SESSNAME){
       echo '{"login":false}';
       exit;
     }
+  }
+}else{
+  if($_SESSION["ADMINNAME"] != "" && $_SESSION["ADMINHASH"] != ""){
+    define("ADM_LOGIN", true);
+  }else{
+    define("ADM_LOGIN", false);
   }
 }
 

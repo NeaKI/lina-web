@@ -7,5 +7,20 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Revolt\\' => array($vendorDir . '/revolt/event-loop/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'LibDNS\\' => array($vendorDir . '/daverandom/libdns/src'),
+    'League\\Uri\\' => array($vendorDir . '/league/uri-interfaces/src', $vendorDir . '/league/uri/src'),
+    'Kelunik\\Certificate\\' => array($vendorDir . '/kelunik/certificate/src'),
+    'Amp\\WindowsRegistry\\' => array($vendorDir . '/amphp/windows-registry/src'),
+    'Amp\\Sync\\' => array($vendorDir . '/amphp/sync/src'),
+    'Amp\\Socket\\' => array($vendorDir . '/amphp/socket/src'),
+    'Amp\\Serialization\\' => array($vendorDir . '/amphp/serialization/src'),
+    'Amp\\Process\\' => array($vendorDir . '/amphp/process/src'),
+    'Amp\\Pipeline\\' => array($vendorDir . '/amphp/pipeline/src'),
+    'Amp\\Parser\\' => array($vendorDir . '/amphp/parser/src'),
+    'Amp\\Parallel\\' => array($vendorDir . '/amphp/parallel/src'),
+    'Amp\\Dns\\' => array($vendorDir . '/amphp/dns/src'),
+    'Amp\\Cache\\' => array($vendorDir . '/amphp/cache/src'),
+    'Amp\\ByteStream\\' => array($vendorDir . '/amphp/byte-stream/src'),
     'Amp\\' => array($vendorDir . '/amphp/amp/src'),
 );

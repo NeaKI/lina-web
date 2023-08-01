@@ -11,7 +11,8 @@ class RequestHandle {
     }
 
     function dieHeader(string $argText = "") {
-      header("HTTP/1.1 401 Unauthorized");
+      #header("HTTP/1.1 401 Unauthorized");
+      header("HTTP/1.1 428 Precondition Required");
       header('NEA-SND-HSH: ' . self::$SECHASH);
       die(json_encode($argText));
     }
@@ -81,9 +82,6 @@ class RequestHandle {
       $_keys["GEOIP_ADDR"] = $_SERVER["GEOIP_ADDR"];
       $_keys["REMOTE_PORT"] = $_SERVER["REMOTE_PORT"];
       $_keys["SESSION_ID"] = session_id();
-
-#print_r($_SERVER);
-#exit;
 
       $_keysString = "";
       foreach ($_keys as $key => $value) {
