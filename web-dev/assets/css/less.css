@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,100,300,700');
+@media print {
+  * {
+    backgrground: #000 !important;
+    color: #fff !important;
+    display: none !important;
+  }
+}
 html body {
   font-family: Roboto, "Open Sans", sans-serif;
 }

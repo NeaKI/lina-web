@@ -8,7 +8,7 @@ $BASELINK = "/web-backend-nea";
 session_start();
 
 function redirectGetSelf(){
-  header('Location: ' . $_SERVER["PHP_SELF"], true, 302);
+  header('Location: ' . $BASELINK, true, 302);
   die();
 }
 
