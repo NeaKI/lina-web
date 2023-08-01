@@ -12,3 +12,21 @@ body.webadmin {
     margin-right: auto;
   } 
 }
+
+
+[data-serverstat-connect][data-serverstat-connect-value="true"] {
+  background: #090;
+}
+[data-serverstat-connect][data-serverstat-connect-value="false"] {
+  background: #d00;
+}
+
+.without-padding-tab .z-content-inner {
+  padding: 0 !important;
+  margin: 0;
+}
+
+[data-service-count-value="0"] {
+  background: #d00;
+  color: #fff;
+}

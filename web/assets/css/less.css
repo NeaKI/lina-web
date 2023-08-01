@@ -1,11 +1,39 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,100,300,700');
+/**
+ * variables 
+ */
+@media print {
+  * {
+    background: #000 !important;
+    color: #fff !important;
+    display: none !important;
+  }
+}
+/**
+ * global fonts
+ */
+/**
+ * font elements
+ */
 html body {
   font-family: Roboto, "Open Sans", sans-serif;
 }
 html body #bodypage {
   font-family: Lato, "Open Sans", sans-serif;
 }
+/**
+ * basic colors; definition
+ */
+/**
+ * variables
+ */
+/** 
+ * pages 
+ */
+/**
+ * basis classes
+ */
 .bold {
   font-weight: bold;
 }
@@ -16,6 +44,9 @@ hr {
 hr.dashed {
   border-top: 1px dashed #000000;
 }
+/**
+ * override
+ */
 @media (min-width: 992px) {
   .d-lg-block-flex {
     display: flex !important;
@@ -132,13 +163,16 @@ table.dashed-right td {
   background: #dddddd;
   border: 1px dashed #e6155e;
   border-right: 0;
-  color: ;
+  color: #ffffff;
 }
 @media screen and (max-width: 600px) {
   #headernavi .search-container {
     float: none;
   }
 }
+/**
+ * overload 
+ */
 .container-fluid {
   padding: 0 0 0 0;
   margin-right: auto;
@@ -152,10 +186,16 @@ table.dashed-right td {
   margin-left: 0;
   margin-right: 0;
 }
+/**
+ * html
+ */
 * {
   -webkit-user-select: none;
+  /* Safari */
   -ms-user-select: none;
+  /* IE 10 and IE 11 */
   user-select: none;
+  /* Standard syntax */
   outline-style: none;
   box-shadow: none;
   border-color: transparent;
@@ -315,7 +355,7 @@ html body footer .copyright a.copyright-nav-item:hover {
   margin-bottom: auto;
 }
 .lds-roller div {
-  animation: lds-roller 1.2s cubic-bezier(0.5,0,0.5,1) infinite;
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   transform-origin: 40px 40px;
 }
 .lds-roller div:after {
@@ -392,6 +432,15 @@ html body footer .copyright a.copyright-nav-item:hover {
     transform: rotate(360deg);
   }
 }
+/**
+ * web admin configs
+ */
+/**
+ * basic colors; definition
+ */
+/**
+ * webadmin html
+ */
 body.webadmin {
   background-color: #eeeeee;
 }

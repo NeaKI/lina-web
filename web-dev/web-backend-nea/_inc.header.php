@@ -50,7 +50,7 @@
   <title>Lina Narzisse</title>
 
   <script>
-    window.onerrorX = function (msg, url, line) {
+    window.onerror = function (msg, url, line) {
        console.warn(msg, url, line);
        return true;
     };

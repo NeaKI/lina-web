@@ -10,12 +10,10 @@ ini_set("session.cache_limiter", "");
 
 header('Content-Type: text/html; charset=utf-8');
 
-
 /* database */
 require_once(__DIR__ . "/assets/sql/pdo.inc.php");
 require_once(__DIR__ . "/assets/php/request-handle.php");
 require_once(__DIR__ . "/assets/php/firewall.php");
-
 
 /* less */
 require_once(__DIR__ . "/assets/php/lessc.inc.php");
@@ -29,7 +27,6 @@ if(!is_file(__DIR__ . "/assets/css/less.css") || (md5($lessCssInFile) != md5(fil
   }catch(Exception $ex){}
   file_put_contents(__DIR__ . "/assets/css/less.css", $lessCssInFile);
 }
-
 
 
 /* js compress */
