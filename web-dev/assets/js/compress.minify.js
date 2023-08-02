@@ -350,6 +350,7 @@ class NeaWebsiteBasic_LocalLink {
     self.onClick();
     self.formSubmit();
     self.zozoTabs();
+    self.disableDragableImages();
   }
 
   getLinks() {
@@ -505,6 +506,13 @@ class NeaWebsiteBasic_LocalLink {
       return returnVal;
   }
 
+  disableDragableImages(){
+    $('img').attr('draggable', false);
+    $('img').off('dragstart').on('dragstart', function () {
+        return false;
+    });
+  }
+
   loadAfter() {
     var self = this;
 
@@ -514,6 +522,7 @@ class NeaWebsiteBasic_LocalLink {
     self.onClick();
     self.formSubmit();
     self.zozoTabs();
+    self.disableDragableImages();
     $(".preloader-container").stop().hide(0);
   }
 
@@ -2442,6 +2451,339 @@ class NeaWebsitePageFunction {
   return iro$1;
 
 }));
+;
+(function ($) {
+  /**
+   * jQuery Arrows Plugin
+   * This plugin provides functionality to create and manage arrow connections between HTML elements.
+   */
+
+  
+  // Unique arrow number (in case id is not specified)
+  var n = 0;
+  
+  /**
+   * arrows(options)
+   * Initializes the arrows plugin on the selected elements.
+   * @param {Object} options - Options for the arrows plugin.
+   * @returns {jQuery} The jQuery object.
+   */
+  $.fn.arrows = function (options) {
+    if (options === "update") {
+      return processArrows(update, this);
+    } else if (options === "remove") {
+      return processArrows(destroy, this);
+    } else {
+      // Merge the provided options with the default options
+      options = $.extend(
+        true,
+        {
+          from: this,
+          to: this,
+          id: "arrow-" + n++,
+          within: "body",
+        },
+        options
+      );
+
+      // Create arrows between the specified elements
+      connect(options);
+
+      return this;
+    }
+  };
+
+  /**
+   * arrows event
+   * Custom event for the arrows plugin.
+   */
+  $.event.special.arrows = {
+    teardown: function (namespaces) {
+      // Destroy the arrows when the element is being removed
+      processArrows(destroy, $(this));
+    },
+  };
+
+  /**
+   * connect(options)
+   * Creates arrows between elements based on the provided options.
+   * @param {object} options - Options for creating arrows.
+   */
+  var connect = function (options) {
+    var end1 = $(options.from);
+    var end2 = $(options.to);
+    var within = $(options.within);
+
+    // Remove unnecessary options
+    delete options.from;
+    delete options.to;
+    delete options.within;
+
+    $(":root").each(function () {
+      var container = within;
+      var done = new Array();
+      end1.each(function () {
+        var node = this;
+        done.push(this);
+        end2.not(done).each(function () {
+          // Create an arrow between two elements
+          createArrow(container, [node, this], options);
+        });
+      });
+    });
+  };
+
+  /**
+   * createArrow(container, nodes, options)
+   * Creates an arrow element between two nodes within a container.
+   * @param {Element} container - The container element to append the arrow to.
+   * @param {Element[]} nodes - An array of two node elements to connect.
+   * @param {object} options - Additional options for the arrow element.
+   */
+  var createArrow = function (container, nodes, options) {
+    // Create the arrow canvas element and append to it to the container
+    const svgString = `<svg xmlns="http://www.w3.org/2000/svg" id="${options.id}-svg" class="svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>`;
+    const arrow = $("<arrow>", options).html(svgString);
+    container.append(arrow);
+
+    // Create arrow's associated data
+    var data = {
+      id: options.id,
+      class: options.class,
+      name: options.name,
+      node_from: $(nodes[0]),
+      node_to: $(nodes[1]),
+      nodes_dom: nodes
+    };
+
+    // Store the arrow data using jQuery's data() method
+    $.data(arrow.get(0), "arrow", data);
+    $.data(arrow.get(0), "arrows", [arrow.get(0)]);
+
+    // Update the arrows for the nodes
+    for (var i = 0; i < 2; i++) {
+      var arrows = arrow.add($.data(nodes[i], "arrows")).get();
+      $.data(nodes[i], "arrows", arrows);
+
+      // Trigger the "arrows.arrows" event on the nodes
+      if (arrows.length == 1) {
+        $(nodes[i]).on("arrows.arrows", false);
+      }
+    }
+
+    update(arrow.get(0));
+  };
+
+  /**
+   * destroy(arrow)
+   * Destroys an arrow by removing it from the DOM and updating the arrows for the nodes.
+   * @param {Element} connection - The arrow element to destroy.
+   */
+  var destroy = function (arrow) {
+    var nodes = $.data(arrow, "arrow").nodes_dom;
+    for (var i = 0; i < 2; i++) {
+      var arrows = $($.data(nodes[i], "arrows")).not(arrow).get();
+      $.data(nodes[i], "arrows", arrows);
+    }
+    $(arrow).remove();
+  };
+
+  /**
+   * getState(data)
+   * Retrieves the state of an arrow by comparing the current and cached positions of the connected nodes.
+   * @param {object} data - The arrow data object containing node information and cached values.
+   * @returns {boolean} - Indicates whether the arrow state has been modified or not.
+   */
+  var getState = function (data) {
+    // Get the bounding rectangles of the connected nodes
+    data.rect_from = data.nodes_dom[0].getBoundingClientRect();
+    data.rect_to = data.nodes_dom[1].getBoundingClientRect();
+
+    // Cache the current positions and store previous positions in cached variable
+    var cached = data.cache;
+    data.cache = [
+      data.rect_from.top,
+      data.rect_from.right,
+      data.rect_from.bottom,
+      data.rect_from.left,
+      data.rect_to.top,
+      data.rect_to.right,
+      data.rect_to.bottom,
+      data.rect_to.left,
+    ];
+
+    // Determine if the arrow is hidden based on node positions
+    data.hidden =
+      0 === (data.cache[0] | data.cache[1] | data.cache[2] | data.cache[3]) ||
+      0 === (data.cache[4] | data.cache[5] | data.cache[6] | data.cache[7]);
+
+    // Assume the arrow is unmodified until proven otherwise
+    data.unmodified = true;
+
+    // Check if the cached positions exist
+    if (cached === undefined) {
+      return (data.unmodified = false);
+    }
+
+    // Compare the cached positions with the current positions
+    for (var i = 0; i < 8; i++) {
+      if (cached[i] !== data.cache[i]) {
+        return (data.unmodified = false);
+      }
+    }
+
+    // The arrow state has not been modified
+    return data.unmodified;
+  };
+
+  // Calculate intersection of line from (x,y) to the center of a rectange defined by (minX,maxX,minY,maxY) with the border of the rectangle
+  var pointOnRect = function (x, y, minX, minY, maxX, maxY) {
+    const midX = (minX + maxX) / 2;
+    const midY = (minY + maxY) / 2;
+    const m = (midY - y) / (midX - x);
+
+    if (x <= midX && minY <= m * (minX - x) + y && m * (minX - x) + y <= maxY)
+      return { x: minX, y: m * (minX - x) + y };
+    if (x >= midX && minY <= m * (maxX - x) + y && m * (maxX - x) + y <= maxY)
+      return { x: maxX, y: m * (maxX - x) + y };
+    if (y <= midY && minX <= (minY - y) / m + x && (minY - y) / m + x <= maxX)
+      return { x: (minY - y) / m + x, y: minY };
+    if (y >= midY && minX <= (maxY - y) / m + x && (maxY - y) / m + x <= maxX)
+      return { x: (maxY - y) / m + x, y: maxY };
+    if (x === midX && y === midY) return { x, y };
+  };
+
+  // Modify canvas when updating arrows
+  var modifyCanvas = function (id, minX, minY, width, height) {
+    var svg = document.getElementById(id + "-svg");
+    svg.setAttribute("style", `position: absolute; top: ${minY}px; left: ${minX}px; z-index: -10;`);
+    svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+    return svg;
+  };
+
+  // Add triangle markers definition for arrow heads
+  var addTriangleMarkerDef = function (svg, id, className) {
+    if (svg.querySelector("defs")) return;
+    // Add triangle marker definition to SVG
+    svg.innerHTML += `
+    <defs>
+      <marker id="${id}-triangle" class="${className}" viewBox="0 0 10 10" refX="10" refY="5"
+        markerUnits="strokeWidth" markerWidth="5" markerHeight="8" orient="auto">
+        <path class="svg-line-triangle" d="M 0 0 L 10 5 L 0 10"></path>
+      </marker>
+    </defs>
+  `;
+  };
+
+  // Add arrow line path
+  var addArrowLine = function (svg, id, x1, y1, x2, y2) {
+    // Remove previous arrow path if it exists
+    var prevLine = document.getElementById(id + "-svg" + "-line");
+    if (prevLine) prevLine.remove();
+    // Bezier curve parameters computation
+    var path = "M " + x1 + " " + y1 + " C " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + x2 + " " + y2;
+    // Add new line to svg
+    svg.innerHTML += `<path id="${id}-svg-line" class="svg-line" d="${path}" marker-end="url(#${id}-triangle)"></path>`;
+  };
+  
+  // Add arrow name text
+  var addArrowName = function (svg, id, name) {
+    if (!name) return;
+    // Remove previous name text if it exists
+    var prevText = document.getElementById(id + "-svg" + "-text");
+    if (prevText) prevText.remove();
+    // Add new name text to svg
+    svg.innerHTML += `<text id="${id}-svg-text" class="svg-text" dy="15px" text-anchor="middle" font-size="16px">
+      <textPath href="#${id}-svg-line" startOffset="50%">${name}</textPath>
+    </text>`;
+  };
+
+  /*
+   */
+  var drawArrow = function (id, category, name, x1, y1, x2, y2) {
+    // Get arrow SVG canvas
+    var svg = document.getElementById(id + "-svg");
+    // Add triangle marker def if it doesn't exist already
+    addTriangleMarkerDef(svg, id, category);
+    // Update line conneciton path
+    addArrowLine(svg, id, x1, y1, x2, y2);
+    // Update name text path
+    addArrowName(svg, id, name);
+  };
+
+  /**
+   * Updates the appearance of an arrow element based on its data.
+   * @param {HTMLElement} connection - The arrow element to update.
+   */
+  var update = function (arrow) {
+    // Retrieve arrow data using jQuery's data() method
+    var data = $.data(arrow, "arrow");
+    const { id, category, name } = data;
+
+    // Get the state of the data
+    getState(data);
+
+    // If the data is unmodified or hidden, return without making any updates
+    if (data.unmodified || data.hidden) return;
+
+    // Calculate center coordinates of from and to rectangles
+    const from_cx = (data.rect_from.left + data.rect_from.right) / 2;
+    const from_cy = (data.rect_from.bottom + data.rect_from.top) / 2;
+    const to_cx = (data.rect_to.left + data.rect_to.right) / 2;
+    const to_cy = (data.rect_to.bottom + data.rect_to.top) / 2;
+
+    // Modify size of svg canvas depending on location of from and to rectangles
+    // Increase width and height to prevent singularities when from and to rectangles are aligned in one of the axis
+    const PADDING = 20;
+    const minX = Math.min(from_cx, to_cx) - PADDING;
+    const minY = Math.min(from_cy, to_cy) - PADDING;
+    const width = Math.abs(from_cx - to_cx) + PADDING * 2;
+    const height = Math.abs(from_cy - to_cy) + PADDING * 2;
+    modifyCanvas(id, minX, minY, width, height);
+
+    // Compute intersections with the from and to rectangles
+    const to_int = pointOnRect(
+      from_cx,
+      from_cy,
+      data.rect_to.left,
+      data.rect_to.top,
+      data.rect_to.right,
+      data.rect_to.bottom
+    );
+    const from_int = pointOnRect(
+      to_cx,
+      to_cy,
+      data.rect_from.left,
+      data.rect_from.top,
+      data.rect_from.right,
+      data.rect_from.bottom
+    );
+
+    // Draw the line connecting the intersections
+    drawArrow(id, category, name, from_int.x - minX, from_int.y - minY, to_int.x - minX, to_int.y - minY);
+  };
+
+  /**
+   * Process arrows by applying a given method to each arrow element.
+   * @param {function} method - The method to be applied to each arrow element.
+   * @param {jQuery} elements - The jQuery collection of elements containing arrows.
+   * @returns {jQuery} - The modified jQuery collection of elements.
+   */
+  var processArrows = function (method, elements) {
+    return elements.each(function () {
+      // Retrieve the arrows associated with the current element
+      var arrows = $.data(this, "arrows");
+
+      // Check if arrows exist and apply the method to each arrow
+      if (arrows instanceof Array) {
+        for (var i = 0, len = arrows.length; i < len; i++) {
+          method(arrows[i]);
+        }
+      }
+    });
+  };
+})(jQuery);
 ;
 /*!
  * jquery.confirm
@@ -19775,6 +20117,325 @@ class Sha256 {
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 ;
+/*!
+  jQuery HTML SVG connect v2.0.0
+  license: MIT
+  based on: https://gist.github.com/alojzije/11127839
+  alojzije/connectHTMLelements_SVG.png
+*/
+; (function ($, window, document, undefined) {
+  //https://github.com/jquery-boilerplate/jquery-boilerplate
+  "use strict";
+
+  var pluginName = "HTMLSVGconnect",
+    defaults = {
+      stroke: "#000000",
+      strokeWidth: 12,
+      orientation: "auto",
+      class: "",
+      // Array of objects with properties "start" & "end" that
+      // define the selectors of the elements to connect:
+      // i.e., {start: "#purple", end: "#green"}.
+      // Optional properties:
+      //  "stroke": [color],
+      //  "strokeWidth": [px],
+      //  "orientation": [horizontal|vertical|auto (default)]
+      //  "offset": [px]
+      paths: []
+    };
+
+  function Plugin(element, options) {
+    this.element = element;
+    this.$element = $(this.element);
+    this.settings = $.extend({}, defaults, options);
+    this._defaults = defaults;
+    this._name = pluginName;
+    this.init();
+  }
+
+  $.extend(Plugin.prototype, {
+    init: function () {
+      this.$svg = $(document.createElementNS("http://www.w3.org/2000/svg", "svg"));
+      this.$svg.attr("height", 0).attr("width", 0);
+      this.$element.append(this.$svg);
+      // text
+      this.$text = $(document.createElementNS("http://www.w3.org/2000/svg", "text"));
+      this.$svg.append(this.$text);
+      // Draw the paths, and store references to the loaded elements.
+      this.loadedPaths = $.map(this.settings.paths, $.proxy(this.connectSetup, this));
+      $(window).on("resize", this.throttle(this.reset, 200, this));
+    },
+
+    // Recalculate paths.
+    reset: function () {
+      this.$svg.attr("height", 0).attr("width", 0);
+      $.map(this.loadedPaths, $.proxy(this.connectElements, this));
+    },
+
+    connectSetup: function (pathConfig, i) {
+      if (pathConfig.hasOwnProperty("start") && pathConfig.hasOwnProperty("end")) {
+        var $start = $(pathConfig.start), $end = $(pathConfig.end);
+        // Start/end elements exist.
+        if ($start.length && $end.length) {
+          var $path = $(document.createElementNS("http://www.w3.org/2000/svg", "path"));
+          // Custom/default path properties.
+          var stroke = pathConfig.hasOwnProperty("stroke") ? pathConfig.stroke : this.settings.stroke;
+          var strokeWidth = pathConfig.hasOwnProperty("strokeWidth") ? pathConfig.strokeWidth : this.settings.strokeWidth;
+          var path_class = pathConfig.hasOwnProperty("class") ? pathConfig.class : this.settings.class;
+          var pathId = "path_" + i;
+          $path.attr("fill", "none")
+            .attr("stroke", stroke)
+            .attr("stroke-width", strokeWidth)
+            .attr("class", path_class)
+            .attr("id", pathId);
+          this.$svg.append($path);
+
+          if (pathConfig.text) {
+            var $tspan = this._createSvgTextPath(pathConfig.text, strokeWidth, pathId);
+          }
+
+          var pathData = {
+            "path": $path,
+            "start": $start,
+            "end": $end,
+            "text": pathConfig.text,
+            "tspan": $tspan,
+            "orientation": pathConfig.hasOwnProperty("orientation") ? pathConfig.orientation : this.settings.orientation,
+            "offset": pathConfig.hasOwnProperty("offset") ? parseInt(pathConfig.offset) : 0
+            };
+          this.connectElements(pathData);
+          // Save for reference.
+          return pathData;
+        }
+      }
+      return null; // Ignore/invalid.
+    },
+
+    _createSvgTextPath(text, strokeWidth, pathId) {
+      // textPath
+      var textPathElement = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
+      textPathElement.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "#" + pathId);
+      textPathElement.setAttribute("startOffset", "50%");
+      var $textPath = $(textPathElement);
+      this.$text.append($textPath);
+      var tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      $textPath.append($(tspan));
+      var dy = (strokeWidth / 2) + 2;
+      tspan.setAttribute("dy",  - dy);
+      // need to reset the dy, another tspan is needed
+      var otherTspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      $textPath.append($(otherTspan));
+      otherTspan.setAttribute("dy", dy);
+      $(otherTspan).text(" ");
+      var $tspan = $(tspan);
+      return $tspan;
+    },
+
+    // Whether the path should originate from the top/bottom or the sides;
+    // based on whichever is greater: the horizontal or vertical gap between the elements
+    // (this depends on the user positioning the elements sensibly,
+    // and not overlapping them).
+    determineOrientation: function ($startElem, $endElem) {
+      // If first element is lower than the second, swap.
+      if ($startElem.offset().top > $endElem.offset().top) {
+        var temp = $startElem;
+        $startElem = $endElem;
+        $endElem = temp;
+      }
+      var startBottom = $startElem.offset().top + $startElem.outerHeight();
+      var endTop = $endElem.offset().top;
+      var verticalGap = endTop - startBottom;
+      // If first element is more left than the second, swap.
+      if ($startElem.offset().left > $endElem.offset().left) {
+        var temp2 = $startElem;
+        $startElem = $endElem;
+        $endElem = temp2;
+      }
+      var startRight = $startElem.offset().left + $startElem.outerWidth();
+      var endLeft = $endElem.offset().left;
+      var horizontalGap = endLeft - startRight;
+      return horizontalGap > verticalGap ? "vertical" : "horizontal";
+    },
+
+    connectElements: function (pathData) {
+      var $startElem = pathData.start,
+      $endElem = pathData.end,
+      orientation = pathData.orientation;
+      // Orientation not set per path and/or defaulted to global "auto".
+      if (orientation != "vertical" && orientation != "horizontal") {
+        orientation = this.determineOrientation($startElem, $endElem);
+      }
+      var swap = false;
+      if (orientation == "vertical") {
+        // If first element is more left than the second.
+        swap = $startElem.offset().left > $endElem.offset().left;
+      } else { // Horizontal
+        // If first element is lower than the second.
+        swap = $startElem.offset().top > $endElem.offset().top;
+      }
+      if (swap) {
+        var temp = $startElem;
+        $startElem = $endElem;
+        $endElem = temp;
+      }
+      // Get (top, left) corner coordinates of the svg container.
+      var svgTop = this.$element.offset().top;
+      var svgLeft = this.$element.offset().left;
+
+      // Get (top, left) coordinates for the two elements.
+      var startCoord = $startElem.offset();
+      var endCoord = $endElem.offset();
+
+      // Centre path above/below or left/right of element.
+      var centreSX = 0.5, centreSY = 1,
+        centreEX = 0.5, centreEY = 0;
+      if (orientation == "vertical") {
+        centreSX = 1;
+        centreSY = 0.5;
+        centreEX = 0;
+        centreEY = 0.5;
+      }
+      // Calculate the path's start/end coordinates.
+      // We want to align with the elements' mid point.
+      var startX = startCoord.left + centreSX * $startElem.outerWidth() - svgLeft;
+      var startY = startCoord.top + centreSY * $startElem.outerHeight() - svgTop;
+      var endX = endCoord.left + centreEX * $endElem.outerWidth() - svgLeft;
+      var endY = endCoord.top + centreEY * $endElem.outerHeight() - svgTop;
+
+      this.drawPath(pathData.path, pathData.offset, orientation, startX, startY, endX, endY);
+      if (pathData.text != undefined && pathData.tspan != undefined) {
+        this.drawText(pathData.text, pathData.tspan);
+      }
+    },
+
+    drawPath: function ($path, offset, orientation, startX, startY, endX, endY) {
+      var stroke = parseFloat($path.attr("stroke-width"));
+      // Check if the svg is big enough to draw the path, if not, set height/width.
+      if (this.$svg.attr("width") < (Math.max(startX, endX) + stroke)) this.$svg.attr("width", (Math.max(startX, endX) + stroke));
+      if (this.$svg.attr("height") < (Math.max(startY, endY) + stroke)) this.$svg.attr("height", (Math.max(startY, endY) + stroke));
+
+      var deltaX = (Math.max(startX, endX) - Math.min(startX, endX)) * 0.15;
+      var deltaY = (Math.max(startY, endY) - Math.min(startY, endY)) * 0.15;
+      // For further calculations whichever is the shortest distance.
+      var delta = Math.min(deltaY, deltaX);
+      // Set sweep-flag (counter/clockwise)
+      var arc1 = 0; var arc2 = 1;
+
+      if (orientation == "vertical") {
+        var sigY = this.sign(endY - startY);
+        // If start element is closer to the top edge,
+        // draw the first arc counter-clockwise, and the second one clockwise.
+        if (startY < endY) {
+          arc1 = 1;
+          arc2 = 0;
+        }
+        // Draw the pipe-like path
+        // 1. move a bit right, 2. arch, 3. move a bit down, 4.arch, 5. move right to the end
+        $path.attr("d", "M" + startX + " " + startY +
+          " H" + (startX + offset + delta) +
+          " A" + delta + " " + delta + " 0 0 " + arc1 + " " + (startX + offset + 2 * delta) + " " + (startY + delta * sigY) +
+          " V" + (endY - delta * sigY) +
+          " A" + delta + " " + delta + " 0 0 " + arc2 + " " + (startX + offset + 3 * delta) + " " + endY +
+          " H" + endX);
+      } else {
+        //Horizontal
+        var sigX = this.sign(endX - startX);
+        // If start element is closer to the left edge,
+        // draw the first arc counter-clockwise, and the second one clockwise.
+        if (startX > endX) {
+          arc1 = 1;
+          arc2 = 0;
+        }
+        // Draw the pipe-like path
+        // 1. move a bit down, 2. arch, 3. move a bit to the right, 4.arch, 5. move down to the end
+        $path.attr("d", "M" + startX + " " + startY +
+          " V" + (startY + offset + delta) +
+          " A" + delta + " " + delta + " 0 0 " + arc1 + " " + (startX + delta * sigX) + " " + (startY + offset + 2 * delta) +
+          " H" + (endX - delta * sigX) +
+          " A" + delta + " " + delta + " 0 0 " + arc2 + " " + endX + " " + (startY + offset + 3 * delta) +
+          " V" + endY);
+      }
+    },
+
+    /*
+     * Draw text for a path, takes the text for a path and the id of the path element and will create a textPath element.
+     */
+    drawText(text, $textPath) {
+      $textPath.text(text);
+    },
+
+    /*
+     * Add array of path objects
+     * e.g., var paths = [{ start: "#red", end: "#green" }, { start: "#aqua", end: "#green", stroke: "blue" }];
+     * Public method within the plugin's prototype:
+     * $("#svgContainer").HTMLSVGconnect("addPaths", paths);
+     */
+    addPaths: function(paths) {
+      var loadedPaths = $.map(paths, $.proxy(this.connectSetup, this));
+      Array.prototype.push.apply(this.loadedPaths, loadedPaths);
+    },
+
+    // Chrome Math.sign() support.
+    sign: function (x) {
+      return x > 0 ? 1 : x < 0 ? -1 : x;
+    },
+
+    // https://remysharp.com/2010/07/21/throttling-function-calls
+    throttle: function (fn, threshhold, scope) {
+      threshhold || (threshhold = 250);
+      var last, deferTimer;
+      return function () {
+        var context = scope || this;
+        var now = +new Date,
+          args = arguments;
+        if (last && now < last + threshhold) {
+          clearTimeout(deferTimer);
+          deferTimer = setTimeout(function () {
+            last = now;
+            fn.apply(context, args);
+          }, threshhold);
+        } else {
+          last = now;
+          fn.apply(context, args);
+        }
+      };
+    },
+  });
+
+  // A really lightweight plugin wrapper around the constructor,
+  // preventing against multiple instantiations
+  $.fn[pluginName] = function (options) {
+    var args = arguments;
+    if (options === undefined || typeof options === 'object') {
+      // Creates a new plugin instance, for each selected element, and
+      // stores a reference within the element's data
+      return this.each(function() {
+        if (!$.data(this, 'plugin_' + pluginName)) {
+          $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+        }
+      });
+    } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
+      // Call a public plugin method (not starting with an underscore) for each 
+      // selected element.
+      return this.each(function() {
+        var instance = $.data(this, 'plugin_' + pluginName);
+        if (instance instanceof Plugin && typeof instance[options] === 'function') {
+          instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+        }
+      });
+    }
+  };
+
+})(jQuery, window, document);
+
+
+
+/*$("#bodypage").HTMLSVGconnect({
+  paths: [
+    { start: "#jojo1", end: "#sparkchart2"}
+  ]
+});
+*/;
 /**************************************************************************
 *	@name		    Zozo UI Tabs
 *	@descripton	    Create awesome tabbed content area

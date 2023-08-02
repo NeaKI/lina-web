@@ -16,9 +16,11 @@ body.webadmin {
 
 [data-serverstat-connect][data-serverstat-connect-value="true"] {
   background: #090;
+  z-index: 1;
 }
 [data-serverstat-connect][data-serverstat-connect-value="false"] {
   background: #d00;
+  z-index: 1;
 }
 
 .without-padding-tab .z-content-inner {

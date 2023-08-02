@@ -47,3 +47,56 @@ table {
 .container.sortable {
   background: @color_html_background;
 }
+
+
+
+
+
+arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+
+      &.arrow {
+
+          &.user-dns {
+            path {
+              &.svg-line {
+                stroke: #1414e3;
+                stroke-width: 7;
+                stroke-dasharray: 1;
+              }
+            }
+            marker {
+              fill: #1414e3;
+            }
+          }
+
+          &.dns-firewall {
+            path {
+              &.svg-line {
+                stroke: #000;
+                stroke-width: 7;
+                stroke-dasharray: 1;
+              }
+            }
+            marker {
+              fill: #000;
+            }
+          }
+
+          &.firewall-web {
+            path {
+              &.svg-line {
+                stroke: #900;
+                stroke-width: 7;
+                stroke-dasharray: 1;
+              }
+            }
+            marker {
+              fill: #900;
+            }
+          }
+      }
+}

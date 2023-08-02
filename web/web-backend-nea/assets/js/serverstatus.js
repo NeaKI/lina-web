@@ -115,7 +115,8 @@ class NeaWebsiteServerStatus {
           self.serverserviceByIP[serverIP] = new Array(900).fill(0);
         }
           try {
-            let serverserviceByIPSum = parseFloat((val.service[22].time + val.service[53].time + val.service[80].time + val.service[90].time + val.service[3306].time + val.service[8080].time) / 6).toFixed(4);
+            /*let serverserviceByIPSum = parseFloat((val.service[22].time + val.service[53].time + val.service[80].time + val.service[90].time + val.service[3306].time + val.service[8080].time) / 6).toFixed(4);*/
+            let serverserviceByIPSum = parseFloat((val.service[22].time + val.service[90].time) / 2).toFixed(4);
             self.serverserviceByIP[serverIP].push(serverserviceByIPSum);
           }catch(ex){}
         

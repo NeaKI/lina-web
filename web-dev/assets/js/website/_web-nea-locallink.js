@@ -23,6 +23,7 @@ class NeaWebsiteBasic_LocalLink {
     self.onClick();
     self.formSubmit();
     self.zozoTabs();
+    self.disableDragableImages();
   }
 
   getLinks() {
@@ -178,6 +179,13 @@ class NeaWebsiteBasic_LocalLink {
       return returnVal;
   }
 
+  disableDragableImages(){
+    $('img').attr('draggable', false);
+    $('img').off('dragstart').on('dragstart', function () {
+        return false;
+    });
+  }
+
   loadAfter() {
     var self = this;
 
@@ -187,6 +195,7 @@ class NeaWebsiteBasic_LocalLink {
     self.onClick();
     self.formSubmit();
     self.zozoTabs();
+    self.disableDragableImages();
     $(".preloader-container").stop().hide(0);
   }
 

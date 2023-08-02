@@ -133,6 +133,36 @@ table.dashed-right td {
 .container.sortable {
   background: #ffffff;
 }
+arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+arrow.arrow.user-dns path.svg-line {
+  stroke: #1414e3;
+  stroke-width: 7;
+  stroke-dasharray: 1;
+}
+arrow.arrow.user-dns marker {
+  fill: #1414e3;
+}
+arrow.arrow.dns-firewall path.svg-line {
+  stroke: #000;
+  stroke-width: 7;
+  stroke-dasharray: 1;
+}
+arrow.arrow.dns-firewall marker {
+  fill: #000;
+}
+arrow.arrow.firewall-web path.svg-line {
+  stroke: #900;
+  stroke-width: 7;
+  stroke-dasharray: 1;
+}
+arrow.arrow.firewall-web marker {
+  fill: #900;
+}
 #headernavi form {
   margin-top: 10px;
 }
