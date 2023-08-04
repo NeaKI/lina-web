@@ -398,6 +398,20 @@ class NeaWebsiteBasic_LocalLink {
 
   loadLink(argUrl) {
     var self = this;
+
+    let emptyError = false;
+    let maxError = 1000;
+    do{
+      if($(self.loadElement).length >= 1){
+        try {
+          $(self.loadElement).html('');
+          emptyError = false;
+        }catch(e){
+          emptyError = true;
+        }
+      }
+    }while(emptyError && --maxError >= 0);
+
     let newUrl = argUrl + "?" + self.smartClass + "=true";
     $(".preloader-container").stop().show(0);
     history.replaceState({}, argUrl, argUrl);

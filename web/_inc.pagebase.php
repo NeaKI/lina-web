@@ -10,6 +10,22 @@ ini_set("session.cache_limiter", "");
 
 header('Content-Type: text/html; charset=utf-8');
 
+//CSP only works in modern browsers Chrome 25+, Firefox 23+, Safari 7+
+$headerCSP = "Content-Security-Policy:".
+  "connect-src 'self' ;".
+  "default-src 'self';".
+  "frame-ancestors 'self' ;".
+  "frame-src 'none';".
+  "media-src 'self' *.".$_SERVER["HTTP_HOST"].";".
+  "object-src 'none'; ".
+  "report-uri https://".$_SERVER["HTTP_HOST"]."/report-for-CSP.php;".
+  "script-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"].";".
+  "font-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." ssl.google-analytics.com fonts.gstatic.com fonts.googleapis.com;".
+  "style-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." ssl.google-analytics.com fonts.gstatic.com fonts.googleapis.com;";
+header($headerCSP);
+header('X-Frame-Options: SAMEORIGIN');
+
+
 /* database */
 require_once(__DIR__ . "/assets/sql/pdo.inc.php");
 require_once(__DIR__ . "/assets/php/request-handle.php");
