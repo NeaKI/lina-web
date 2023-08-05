@@ -19,11 +19,36 @@ class NeaWebsiteBasic_LocalLink {
     window.neaWebsitePageFunction = new NeaWebsitePageFunction();
     window.neaWebsitePageFunction.load();
 
+    self.getClientIpToSession();
     self.getLinks();
     self.onClick();
     self.formSubmit();
     self.zozoTabs();
     self.disableDragableImages();
+  }
+
+  getClientIpToSession() {
+    try {
+      $.ajax({
+         type: "POST",
+         url: "https://sys.lina-narzisse.de/cdata.php",
+         async: true,
+         data: {},
+         success: function(response) { 
+
+          $.ajax({
+             type: "POST",
+             url: document.location.pathname + "?cdata=true",
+             async: true,
+             data: {"cdata": response},
+             success: function(response) { 
+              console.log(response);
+             }
+          });
+
+         }
+      });
+    }catch(e){}
   }
 
   getLinks() {

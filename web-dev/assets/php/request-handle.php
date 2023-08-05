@@ -4,10 +4,31 @@ class RequestHandle {
   public static $SECHASH;
 
     function __construct() {
+      @session_start();
+      self::checkCdata();
       self::loadWithoutIndexPhp();
       self::secureHashGenerator();
       self::responseHeadRequest();
       self::formRequest();
+    }
+
+    function checkCdata() {
+      if(isset($_REQUEST["cdata"])){
+        $_SESSION["usercdata"] = [];
+        try {
+          $output = false;
+          $encrypt_method = "AES-256-CBC";
+          $secret_key = 'GjAGmzsFJ6gKYOUeWGoEVzXz378VScO9COjI';
+          $secret_iv = '7LbWmOQ7okQqkscfNpb8XOVnBpbwh0dj90eT';
+          $key = hash('sha256', $secret_key);
+
+          $iv = substr(hash('sha256', $secret_iv), 0, 16);
+          $output = openssl_decrypt(base64_decode($_REQUEST["cdata"]), $encrypt_method, $key, 0, $iv);
+          $output = json_decode($output, true);
+        }catch(Exception $ex){}
+        $_SESSION["usercdata"] = $output;
+        die();
+      }
     }
 
     function dieHeader(string $argText = "") {

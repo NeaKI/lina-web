@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.3.2, created on 2023-07-30 02:03:00
+/* Smarty version 4.3.2, created on 2023-08-04 21:21:10
   from '/neawolf/web-dev/template/module/_header.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.3.2',
-  'unifunc' => 'content_64c5a8b4996952_59666408',
+  'unifunc' => 'content_64cd4fa60cad81_46488862',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '59a94727a808a50397e3ab7f023ad44c5dc8dbb8' => 
     array (
       0 => '/neawolf/web-dev/template/module/_header.tpl',
-      1 => 1690210448,
+      1 => 1691175580,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:./_header.navi.tpl' => 1,
   ),
 ),false)) {
-function content_64c5a8b4996952_59666408 (Smarty_Internal_Template $_smarty_tpl) {
+function content_64cd4fa60cad81_46488862 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!doctype html>
 <html lang="de">
 
@@ -51,7 +51,7 @@ function content_64c5a8b4996952_59666408 (Smarty_Internal_Template $_smarty_tpl)
   <link rel="manifest" href="/site.webmanifest.json" crossorigin="use-credentials">
 
   <?php echo '<script'; ?>
- src="/assets/js/plugins/jquery-3.6.1.min.js"><?php echo '</script'; ?>
+ src="/assets/js/plugins/jquery-3.7.0.min.js"><?php echo '</script'; ?>
 >
 
   <meta property="og:title" content="">

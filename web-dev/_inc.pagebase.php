@@ -3,27 +3,37 @@ error_reporting(1);
 ini_set('display_errors', 1);
 
 ini_set("session.use_cookies", 1);
-ini_set("session.use_only_cookies", 0);
+ini_set("session.use_only_cookies", 1);
 ini_set("session.use_trans_sid", 0);
 ini_set("session.cache_limiter", "");
+ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_httponly', 1);
 
 
 header('Content-Type: text/html; charset=utf-8');
 
 //CSP only works in modern browsers Chrome 25+, Firefox 23+, Safari 7+
 $headerCSP = "Content-Security-Policy:".
-  "connect-src 'self' ;".
+  "connect-src 'self' ".$_SERVER["HTTP_HOST"]." sys.lina-narzisse.de;".
   "default-src 'self';".
   "frame-ancestors 'self' ;".
   "frame-src 'none';".
-  "media-src 'self' *.".$_SERVER["HTTP_HOST"].";".
+  "media-src 'self' ".$_SERVER["HTTP_HOST"]." sys.lina-narzisse.de;".
   "object-src 'none'; ".
+  "img-src 'self' ".$_SERVER["HTTP_HOST"]." sys.lina-narzisse.de data:;".
   "report-uri https://".$_SERVER["HTTP_HOST"]."/report-for-CSP.php;".
-  "script-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"].";".
-  "font-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." ssl.google-analytics.com fonts.gstatic.com fonts.googleapis.com;".
-  "style-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." ssl.google-analytics.com fonts.gstatic.com fonts.googleapis.com;";
+  "script-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." sys.lina-narzisse.de;".
+  "font-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." sys.lina-narzisse.de ssl.google-analytics.com fonts.gstatic.com fonts.googleapis.com;".
+  "style-src 'self' 'unsafe-inline' ".$_SERVER["HTTP_HOST"]." sys.lina-narzisse.de ssl.google-analytics.com fonts.gstatic.com fonts.googleapis.com;";
 header($headerCSP);
 header('X-Frame-Options: SAMEORIGIN');
+header('strict-transport-security: max-age=10886400; includeSubDomains; preload');
+header('X-Content-Type-Options: nosniff');
+header("Referrer-Policy: strict-origin-when-cross-origin");
+header("X-Powered-By: lina-narzisse.de");
+header("Permissions-Policy: geolocation=(), midi=(), camera=(), usb=(), payment=(), gyroscope=(), microphone=(), usb=()");
+header("X-XSS-Protection: 1; mode=block");
+/***/
 
 
 /* database */

@@ -39,7 +39,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/image/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest.json" crossorigin="use-credentials">
   
-  <script src="/assets/js/plugins/jquery-3.6.1.min.js"></script>
+  <script src="/assets/js/plugins/jquery-3.7.0.min.js"></script>
 
   <meta property="og:title" content="">
   <meta property="og:site_name" content="">
